@@ -511,9 +511,53 @@ SQL注释：单行 --  多行 /* */  MYSQL独有单行注释  #
 
  
 
-Python连接数据库：Python插件：PyMySQL
+## Python插件：PyMySQL连接数据库
 
  
 
 列——字段、行——记录、唯一标识——主键
+ 
+
+
+### 常用操作
+
+- show dbs
+
+- show collections
+
+- use dushu  打开或创建dushu数据库
+
+- db.createCollection('集合名')
+
+- db.集合名.drop()
+
+- db.dropDatabase()
+
+- db.集合名.insert()|save()
+
+- db.集合名.update(条件{}, 更新的数据{ $set: { }}, upsert, multi)
+
+  - upsert 为真时，当条件没有匹配数据时，将更新的数据插入到集合中, 反之为假时，则什么也不做。
+  - multi, 为真时， 当条件匹配多条数据时，将会更新所有的数据，反之，只更新每一条数据。
+
+- db.集合名.remove(条件 { })
+
+  删除user集合中文档的name属性包含`成`所有的记录
+
+  ```js
+  db.user.remove({name: {$regex: '成'}})
+  ```
+
+- db.集合名.find(条件{ }， 保留属性{name: 1}).pretty()
+
+  - 逻辑关系
+    - $or
+    - $ne
+    - $lt 
+    - $gt
+    - $lte
+    - $gte
+  - 正则表示
+    - $regex
+
 
