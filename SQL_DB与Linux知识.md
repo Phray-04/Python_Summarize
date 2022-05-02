@@ -566,3 +566,80 @@ SQL注释：单行 --  多行 /* */  MYSQL独有单行注释  #
 ```python
 from mql_tookits.mplot3d import Axes3d
 ```
+ 
+ ### Linux
+
+#### 系统安装
+
+A：虚拟机安装Linux Ubuntu开发系统（未采纳）
+
+B：电脑双系统https://www.cnblogs.com/masbay/p/11627727.html
+
+基于Windows10安装Linux Ubuntu 双系统
+
+基本信息：DELL Ispiron 5488 单硬盘（C盘 D盘）WIndows 系统UEFI格式
+
+工具：
+
+UItralSo 软牒通 软件(用软牒通向U盘写入镜像文件)
+
+U盘 （>2G)
+
+Ubuntu镜像文件 ：Ubuntu-20.04.2.0-desktop-cmd64.iso
+
+Windows(NIFS)分区：压缩卷 D	80G用来装新系统
+
+*分区是因为两个系统文件存储格式不同，防止混乱* 
+
+```
+BIOS boot manager(F12快捷键)
+	--Security boot Secure		[Disabled]
+	--Intel RST					[Disabled]
+System Configuration	--SATA Operation
+```
+
+——双系统切换：
+
+Windows10 	RAID ON	boot manager
+
+Ubuntu20.4	ACHI		   ubuntu
+
+
+
+Set Individual OS(Ubuntu):
+Language(语言)/regon（地区）/keyboard(键盘)/Account(账户)/Password(密码)
+
+Ubuntu 分区（手动分区）：
+
+​	efi		200MB	逻辑分区/起始位置	安装启动项
+
+​	swap	8G		   逻辑分区/起始位置	交换空间
+
+​	/			40G		主分区/起始位置		ext4日志文件系统（根目录）
+
+​	/home  剩余空间 逻辑分区/起始位置   ext4日志文件系统（存储）
+
+
+#### Shell指令
+
+1.程序安装：
+
+基于Debian(Ubuntu)的deb或源文件（rpm基于Red hat)
+
+deb包安装 dpkg -i xxx		卸载 dpkg -r xxx 
+
+2.常用程序
+
+Ubuntu Software
+
+PyCharm Professional Edition/Visual Studio Code/Vim
+
+Typora /FireFox/Google Chrom
+
+
+
+3.Shell 常用指令
+
+  ...
+
+
