@@ -24,7 +24,7 @@ Python Program document
 
 ---
 
-## 入门基础篇
+## Python入门基础篇
 
 ### 一、	环境搭建
 
@@ -769,13 +769,6 @@ From 模块名import 功能名 as 别名
 
 自定义模块名不要和系统的模块名重名；最好在自定义模块添加一些<u>测试信息</u>；
 
- 
-
-**包管理工具pip**:查找下载Python第三方工具包,添加到用户环境变量PATH中
-
-pip install 包名 ：安装指定第三方包	/	pip uninstall 包名 :卸载指定第三方包
-
-pip list 列出所有包,pip freeze 列出安装的第三方包
 
 #### **2. 内置模块**
 
@@ -793,18 +786,15 @@ pip list 列出所有包,pip freeze 列出安装的第三方包
 | os       | 操作系统,跨平台操作                |
 
 
-
-____init____.py 控制着包的导入行为（魔法方法）
-
-____all____变量控制着from包名import*时导入的模块
-
  
 
 ####  3. 魔法方法
 
 两侧各有两个下划线
 
-__init__创建对象（默认调用）
+____init____.py 控制着包的导入行为（魔法方法），创建对象（默认调用）
+
+____all____变量控制着from包名import*时导入的模块
 
 __del__删除对象（默认调用）
 
@@ -1023,12 +1013,8 @@ load方法可以传入一个文件对象，用来将一个文件对象里的数�
 
  
 
-2***\*、pickle模块转化为二进制（同上）\****
-
- 
-
-\#不能跨平台，保存对象的所有数据
-
+2 **pickle模块转化为二进制（同上）**
+不能跨平台，保存对象的所有数据
  
 
 #### 3.	异常处理
@@ -1070,15 +1056,10 @@ with open("output.txt", "r") as f:
 标准库中的四种任务队列：
 queue.Queue		asyncio.Queue		mult iprocessing.Queue		collections.deque
 
+---
  
 
- 
-
-## **A  --基础项目汇总--**
-
-
-
-小练手:
+## 基础项目汇总
 
 ### 1. 猜拳游戏:
 
@@ -1174,21 +1155,84 @@ while i < len(nums) - 1:
 # 如果这个姓名在列表里不存在，就将这个姓名添加到列表里。
 ```
 
+### 6.计算和字符串属性的应用
+
+1-100以内能被7整除的数的个数以及这些书累加起来的和拼在一起
+
+```python
+s = 0
+alist = []
+for i in range (1,100):
+  if i%7 == 0:
+    s=s+i
+    alist.append(i)
+print(str(len(alist))+str(s))
+
+i=0
+sums = 0
+while i*7<=100:
+  sum = sum+i*7
+  i+=1
+print(str(i)+str(sum))
+```
+
+### 7. 奇偶分析排序
+
+输入一个整数序列，对其进行排序，使得奇数在前，偶数在后，奇数从大到小排列，偶数从小到大排序。
+
+```python
+lst = list(map(int, input().split()))
+odd, even = [], []
+for i in lst:
+    if i%2==1:
+        odd.append(i)
+    else:
+        even.append(i)
+​
+odd.sort(reverse=True)
+even.sort()
+print(odd+even)
+```
 
 
-### 6. 飞机大战
+### 8.美妙的数
 
-pygame游戏开发模块
+如果一个正整数，各位数字之和加上各位数字之积，恰好等于这个数本身，就把它叫做“美妙的数”。请找出从A到B之间的正整数，有多少个是美妙的数。
 
-### 7. 植物大战僵尸
+```python
+a, b = map(int, input().split())
+def ok(n):
+    number = n
+    digits = []
+    while True:
+        if number >= 10:
+            tmp = number % 10
+            digits.append(tmp)
+            number = int((number - tmp)/10)
+        else:
+            digits.append(number)
+            break
+    add, product = 0,1
+    for i in digits:
+        add = add + i
+        product = product * i
+    return add + product == n
+    
+count = 0
+for i in range(a,b+1):
+    if ok(i):
+        count += 1
+print(count)
+```
+
+## Python高级应用篇
 
 
-
-### 一 迭代器和生成器
+### 迭代器和生成器
 
  
 
-***\*装饰器decorator\****功能：
+**装饰器decorator**功能：
 
 在不改变原函数的基础上为函数添加新功能的方法
 
@@ -1333,11 +1377,9 @@ Send唤醒同时向断点处传入一个附加数据
 
   第四个参数是字符串，调用 对象.属性.doc ，此参数是该属性的描述信息
 
-###  二 多任务
 
 
-
-**十八、**进程process（电脑的应用）和线程thread（应用的窗口）
+### 进程process（电脑的应用）和线程thread（应用的窗口）
 
  
 
@@ -1469,7 +1511,7 @@ from multiprocessing import Process# 引入进程
 
  
 
-### 五 正则表达式 
+### 正则表达式 
 
  
 
@@ -1558,9 +1600,129 @@ re.l使匹配对大小写不敏感	|	re.L做本地化识别匹配	|	re.M多行�
 
 re.sub用户替换字符串,re.sub(pattern=正则中的模式字符串, repl, string, count=0, flags=0)
 
+
+### GUI 用户图形界面TKinter
+
+
+用户图形界面
+
+| 控件                           | 描述                      |
+| ------------------------------ | ------------------------- |
+| Button  按钮                   |                           |
+| Canvas  画布                   | 显示图形元素如线条或文本  |
+| Checkbutton  多选框            | 多项选择                  |
+| Entry  输入框                  |                           |
+| Frame  框架                    | 一个矩形区域作为容器      |
+| Label  标签                    | 文本或位图                |
+| Listbox  列表框                | 显示字符串列表            |
+| Menubutton  单选按钮           | 菜单项                    |
+| Menu  菜单                     | 菜单栏,下拉菜单,弹出菜单  |
+| Message  消息                  | 多行文本                  |
+| Radiobutton  单选按钮          |                           |
+| Scale  范围尺寸条              | 限定数字区间的数值刻度    |
+| Scrolibar  滚动条              | 内容超出可视化区域时生效  |
+| Text  文本                     | 多行文本                  |
+| Toplevel  容器                 | 单独对话框                |
+| Spinbox  选值框(输入)          | 可指定输入范围值的"Entry" |
+| PanedWindow  窗口布局管理      | 可包含多个控件            |
+| LabelFrame  容器               | 复杂窗口布局              |
+| tkMessageBox  消息框           | 消息框                    |
+| LabeledScale  有数字的尺寸条   |                           |
+| OptionMenu  下拉式列表         |                           |
+| Comboobox  组合框              |                           |
+| Progressbar  进度条            |                           |
+| Separator  分割线              |                           |
+| Treeview  树形视图(表格/树状)  |                           |
+| Notebook  笔记本               |                           |
+| tix.Ballon  气泡提示框         |                           |
+| scrolledtext  带滚动条的文本框 |                           |
+|                                |                           |
+
+三种布局方式:pack()自动布局	|	place()坐标值	|	grid()堆叠式
+
+```
+sticky参数用N/S/W/E表示上下左右（决定该组件的开始方向）
+
+rowspan跨越的行数，columnspan跨越的列数；ipadx/ipady边距
+
+<Button-1> 表示⿏标左键单击，其中的 1 换成 3 表示右 键被单击
+<KeyPress-A> 表示 A 键被按下，其中的 A 可以换成其他 的键位。
+
+bind.class绑定类别；
+例：w.bind_class(“Entry”, “<Control-V>”, my_paste)
+类名 + 事件类型 + 相应操作 ——Ctrl+V 表示粘贴
+unbind解除绑定
+
+其他标准对话框：simpledialog(简单对 话框)，commondialog(⼀般 对话框)，filedialog(⽂件对话框)
+```
+
+config配置控件样式
+
+[Python使用鼠标滚轮调整tkinter应用程序窗口大小](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab472dcfd3d64bd6b2293f5f9351cf7a7b96a072e5c65bd7366e6bf00b05327a67b3d8648&idx=1&mid=2247491368&scene=21&sn=c7c510398d85f655cb95f41e734099e8#wechat_redirect)
+
+[Python使用tkinter+moviepy+pyaudio开发视频播放器](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab441dcfd3d57a24e778a42f5b3287b39745fc1cc63d5ab0c03b2f18580116653c5e0e71d&idx=1&mid=2247491355&scene=21&sn=f31813afd694bf3ce223d1ade3229513#wechat_redirect)
+
+[Python+tkinter实现超时无键盘操作自动退出](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab50bdcfd3c1d18ab65f3bc42ba38b140040d03c13851bc4afae15576166eb57126b6d368&idx=1&mid=2247491153&scene=21&sn=185d193f12af31d632831ad879518279#wechat_redirect)
+
+[Python+turtle绘制虚线同心圆](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab64adcfd3f5c908e953d39bc531601427c12ad6622319abcd62defbcf760b2935d756875&idx=1&mid=2247490832&scene=21&sn=bdb0a0c077f0a5e782d119643b284ef4#wechat_redirect)
+
+[Python在tkinter界面中显示matplotlib动画](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab0badcfd39ac7221c5b212e0f290fca07362a52e7c90233bd4cf0bc756883f51470abce1&idx=1&mid=2247490528&scene=21&sn=d655c0c0956f70d34239fdfee3cab4c2#wechat_redirect)
+
+[一文掌握Python+tkinter键盘事件与鼠标事件处理](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab1fadcfd38ec94be47d484469e5d004c719e07435a648ebed1491af6fe237bb825ec00f1&idx=1&mid=2247490208&scene=21&sn=ff24572ad3905672e084bb66c370cb81#wechat_redirect)
+
+[Python+tkinter实现文件拖放功能](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab128dcfd383ed9846bb73d322d11e59c70206e6b2e2cc77d03e9d76d75c03e1995edbbb2&idx=1&mid=2247490162&scene=21&sn=b41332a1e34fd04868033cb05f8ba75b#wechat_redirect)
+
+[Python+tkinter根据窗体大小自动缩放并显示图像](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8abc37dcfd3521ec00424717cffb434f3cebed384785b6c8765f02b07683c5de6e4a13d6ed&idx=1&mid=2247489389&scene=21&sn=75785de3bc71d76011d1c009dbf7688b#wechat_redirect)
+
+[使用Python编写属于自己的录音软件](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab9b0dcfd30a697b08928fa0d942997bb37782548db9be8180b745343226bb7f65653cb55&idx=1&mid=2247488234&scene=21&sn=8828157558da57e7e01ab4ec07dbc047#wechat_redirect)
+
+[使用Python编写自己的个人密码管理器http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8abb25dcfd32336c8bea0af0e9cb8af23d6809916b5f0c84f22aa71cde742d5401c83a86ec&idx=1&mid=2247487615&scene=21&sn=a9d4c0b4fb6f855ec6047fdd3febd47e#wechat_redirect)
+
+[使用Python+tkinter编写电脑桌面放大镜程序](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa28adcfd2b9c5ef052e009ce30d771120f21cade111e41e8cf5ca96be7991118756b8119&idx=1&mid=2247485904&scene=21&sn=c4d74cb6aa2253aa8547c178921697e9#wechat_redirect)
+
+[80行代码使用Python+tkinter实现一个计算器](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa239dcfd2b2fa7165dc401a9ee04f3d3b9974e4aeadbd939fc2ca3daf6fb0e4987c86ed3&idx=1&mid=2247485795&scene=21&sn=d945abaca37b87a6539bac4a9f669d41#wechat_redirect)
+
+[Python+tkinter模拟“记住我”自动登录原理](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aaf6adcfd267cd11874a79a64f6da295d9dea2afb9f011a644265ebb7b62d7744bd2380eb&idx=1&mid=2247484464&scene=21&sn=736409bc0420d06ba25babbea3ad169f#wechat_redirect)
+
+[基于Python+tkinter+pygame的音乐播放器完整源码](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa8e6dcfd21f0e1d4e8f5b524d05c08e49f1cebfefaede00bedfbf0a26e60265dcecd38c6&idx=1&mid=2247484348&scene=21&sn=eabacd77ff9f599d8d894bf3d8635992#wechat_redirect)
+
+[Python使用tkinter打造自定义对话框完整代码](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa8eadcfd21fc42afc84fc077364fcbe44f1a1fb34714afa487a53fdb618dc86b91c47375&idx=1&mid=2247484336&scene=21&sn=45cf8186fb50710712c37d8c6ecbcdcf#wechat_redirect)
+
+[Python+tkinter动态创建与销毁组件小案例](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa8c0dcfd21d677dc8872b224144579d5fbe2f2acddd85b2345c89e78fbb4d746a1bd59f3&idx=1&mid=2247484314&scene=21&sn=16eccb25325f286588ab51c19788b8f8#wechat_redirect)
+
+[Python实现屏幕取色器功能](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa83edcfd21285567ae404b89797d62472620d28423b8e9dec99dd1ab74ff00732937dbcd&idx=1&mid=2247484260&scene=21&sn=569096888099edec4d5189c7e4877e43#wechat_redirect)
+
+[Python编写抽奖式随机提问程序](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa83bdcfd212d8a9f2af222adb84108179fcbb07a72e629667f72b98e23fdfb0b23766b33&idx=1&mid=2247484257&scene=21&sn=116d13bc5c2382fe1eddf734ed0c95b2#wechat_redirect)
+
+[Python使用tkinter编写图片浏览程序](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa815dcfd2103a4e9af9b345b5cf6fdb26da8974aa0527253583f3418751169d85d0eda2d&idx=1&mid=2247484239&scene=21&sn=fd88760ed9c6f500271229985c13df9a#wechat_redirect)
+
+[Python实现倒计时按钮](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa81fdcfd210912efff7b4948abeb98622d8e020dc3be4a04e244d438a07561a1ff083898&idx=1&mid=2247484229&scene=21&sn=85fd9932d5a19a39fb0e6979c0cf2107#wechat_redirect)
+
+[详解Python GUI版24点游戏制作过程](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa945dcfd20532dc4d3591f29eb5eb2e0cce9a4c93db478dd39670dd2b86497b092baf2c3&idx=1&mid=2247483935&scene=21&sn=907a482eb024b13b6b2c826df0299835#wechat_redirect)
+
+[Python tkinter版猜数游戏](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aaaa0dcfd23b664ddf3a10eed6602a5fe139fc6a9c70936e7acf33df7921b90aa12fc427f&idx=1&mid=2247483898&scene=21&sn=d93349e27f5bf00dbf735f3f7285f135#wechat_redirect)
+
+[Python+tkinter实现任意多层级关系的组合框](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&idx=1&mid=2247483746&scene=21&sn=348a1194b9ff95107994cd90fc5ba154#wechat_redirect)
+
+[Python+tkinter+pillow实现屏幕任意区域截图](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&idx=1&mid=2247483721&scene=21&sn=e88d8a205e2671281d17b57ba91e2e0a#wechat_redirect)
+
+
+### pygame游戏开发模块
+
+飞机大战
+
+
  
 
 ### 常见问题
+
+#### 包管理工具pip
+
+**包管理工具pip**:查找下载Python第三方工具包,添加到用户环境变量PATH中
+
+pip install 包名 ：安装指定第三方包	/	pip uninstall 包名 :卸载指定第三方包
+
+pip list 列出所有包,pip freeze 列出安装的第三方包
 
 #### 解压文件
 
@@ -1701,113 +1863,6 @@ pyinstaller参数集合：
 
 
 ## 专业分支篇
-
-### GUI 用户图形界面TKinter
-
-
-用户图形界面
-
-| 控件                           | 描述                      |
-| ------------------------------ | ------------------------- |
-| Button  按钮                   |                           |
-| Canvas  画布                   | 显示图形元素如线条或文本  |
-| Checkbutton  多选框            | 多项选择                  |
-| Entry  输入框                  |                           |
-| Frame  框架                    | 一个矩形区域作为容器      |
-| Label  标签                    | 文本或位图                |
-| Listbox  列表框                | 显示字符串列表            |
-| Menubutton  单选按钮           | 菜单项                    |
-| Menu  菜单                     | 菜单栏,下拉菜单,弹出菜单  |
-| Message  消息                  | 多行文本                  |
-| Radiobutton  单选按钮          |                           |
-| Scale  范围尺寸条              | 限定数字区间的数值刻度    |
-| Scrolibar  滚动条              | 内容超出可视化区域时生效  |
-| Text  文本                     | 多行文本                  |
-| Toplevel  容器                 | 单独对话框                |
-| Spinbox  选值框(输入)          | 可指定输入范围值的"Entry" |
-| PanedWindow  窗口布局管理      | 可包含多个控件            |
-| LabelFrame  容器               | 复杂窗口布局              |
-| tkMessageBox  消息框           | 消息框                    |
-| LabeledScale  有数字的尺寸条   |                           |
-| OptionMenu  下拉式列表         |                           |
-| Comboobox  组合框              |                           |
-| Progressbar  进度条            |                           |
-| Separator  分割线              |                           |
-| Treeview  树形视图(表格/树状)  |                           |
-| Notebook  笔记本               |                           |
-| tix.Ballon  气泡提示框         |                           |
-| scrolledtext  带滚动条的文本框 |                           |
-|                                |                           |
-
-三种布局方式:pack()自动布局	|	place()坐标值	|	grid()堆叠式
-
-```
-sticky参数用N/S/W/E表示上下左右（决定该组件的开始方向）
-
-rowspan跨越的行数，columnspan跨越的列数；ipadx/ipady边距
-
-<Button-1> 表示⿏标左键单击，其中的 1 换成 3 表示右 键被单击
-<KeyPress-A> 表示 A 键被按下，其中的 A 可以换成其他 的键位。
-
-bind.class绑定类别；
-例：w.bind_class(“Entry”, “<Control-V>”, my_paste)
-类名 + 事件类型 + 相应操作 ——Ctrl+V 表示粘贴
-unbind解除绑定
-
-其他标准对话框：simpledialog(简单对 话框)，commondialog(⼀般 对话框)，filedialog(⽂件对话框)
-```
-
-config配置控件样式
-
-[Python使用鼠标滚轮调整tkinter应用程序窗口大小](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab472dcfd3d64bd6b2293f5f9351cf7a7b96a072e5c65bd7366e6bf00b05327a67b3d8648&idx=1&mid=2247491368&scene=21&sn=c7c510398d85f655cb95f41e734099e8#wechat_redirect)
-
-[Python使用tkinter+moviepy+pyaudio开发视频播放器](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab441dcfd3d57a24e778a42f5b3287b39745fc1cc63d5ab0c03b2f18580116653c5e0e71d&idx=1&mid=2247491355&scene=21&sn=f31813afd694bf3ce223d1ade3229513#wechat_redirect)
-
-[Python+tkinter实现超时无键盘操作自动退出](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab50bdcfd3c1d18ab65f3bc42ba38b140040d03c13851bc4afae15576166eb57126b6d368&idx=1&mid=2247491153&scene=21&sn=185d193f12af31d632831ad879518279#wechat_redirect)
-
-[Python+turtle绘制虚线同心圆](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab64adcfd3f5c908e953d39bc531601427c12ad6622319abcd62defbcf760b2935d756875&idx=1&mid=2247490832&scene=21&sn=bdb0a0c077f0a5e782d119643b284ef4#wechat_redirect)
-
-[Python在tkinter界面中显示matplotlib动画](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab0badcfd39ac7221c5b212e0f290fca07362a52e7c90233bd4cf0bc756883f51470abce1&idx=1&mid=2247490528&scene=21&sn=d655c0c0956f70d34239fdfee3cab4c2#wechat_redirect)
-
-[一文掌握Python+tkinter键盘事件与鼠标事件处理](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab1fadcfd38ec94be47d484469e5d004c719e07435a648ebed1491af6fe237bb825ec00f1&idx=1&mid=2247490208&scene=21&sn=ff24572ad3905672e084bb66c370cb81#wechat_redirect)
-
-[Python+tkinter实现文件拖放功能](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab128dcfd383ed9846bb73d322d11e59c70206e6b2e2cc77d03e9d76d75c03e1995edbbb2&idx=1&mid=2247490162&scene=21&sn=b41332a1e34fd04868033cb05f8ba75b#wechat_redirect)
-
-[Python+tkinter根据窗体大小自动缩放并显示图像](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8abc37dcfd3521ec00424717cffb434f3cebed384785b6c8765f02b07683c5de6e4a13d6ed&idx=1&mid=2247489389&scene=21&sn=75785de3bc71d76011d1c009dbf7688b#wechat_redirect)
-
-[使用Python编写属于自己的录音软件](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8ab9b0dcfd30a697b08928fa0d942997bb37782548db9be8180b745343226bb7f65653cb55&idx=1&mid=2247488234&scene=21&sn=8828157558da57e7e01ab4ec07dbc047#wechat_redirect)
-
-[使用Python编写自己的个人密码管理器http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8abb25dcfd32336c8bea0af0e9cb8af23d6809916b5f0c84f22aa71cde742d5401c83a86ec&idx=1&mid=2247487615&scene=21&sn=a9d4c0b4fb6f855ec6047fdd3febd47e#wechat_redirect)
-
-[使用Python+tkinter编写电脑桌面放大镜程序](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa28adcfd2b9c5ef052e009ce30d771120f21cade111e41e8cf5ca96be7991118756b8119&idx=1&mid=2247485904&scene=21&sn=c4d74cb6aa2253aa8547c178921697e9#wechat_redirect)
-
-[80行代码使用Python+tkinter实现一个计算器](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa239dcfd2b2fa7165dc401a9ee04f3d3b9974e4aeadbd939fc2ca3daf6fb0e4987c86ed3&idx=1&mid=2247485795&scene=21&sn=d945abaca37b87a6539bac4a9f669d41#wechat_redirect)
-
-[Python+tkinter模拟“记住我”自动登录原理](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aaf6adcfd267cd11874a79a64f6da295d9dea2afb9f011a644265ebb7b62d7744bd2380eb&idx=1&mid=2247484464&scene=21&sn=736409bc0420d06ba25babbea3ad169f#wechat_redirect)
-
-[基于Python+tkinter+pygame的音乐播放器完整源码](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa8e6dcfd21f0e1d4e8f5b524d05c08e49f1cebfefaede00bedfbf0a26e60265dcecd38c6&idx=1&mid=2247484348&scene=21&sn=eabacd77ff9f599d8d894bf3d8635992#wechat_redirect)
-
-[Python使用tkinter打造自定义对话框完整代码](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa8eadcfd21fc42afc84fc077364fcbe44f1a1fb34714afa487a53fdb618dc86b91c47375&idx=1&mid=2247484336&scene=21&sn=45cf8186fb50710712c37d8c6ecbcdcf#wechat_redirect)
-
-[Python+tkinter动态创建与销毁组件小案例](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa8c0dcfd21d677dc8872b224144579d5fbe2f2acddd85b2345c89e78fbb4d746a1bd59f3&idx=1&mid=2247484314&scene=21&sn=16eccb25325f286588ab51c19788b8f8#wechat_redirect)
-
-[Python实现屏幕取色器功能](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa83edcfd21285567ae404b89797d62472620d28423b8e9dec99dd1ab74ff00732937dbcd&idx=1&mid=2247484260&scene=21&sn=569096888099edec4d5189c7e4877e43#wechat_redirect)
-
-[Python编写抽奖式随机提问程序](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa83bdcfd212d8a9f2af222adb84108179fcbb07a72e629667f72b98e23fdfb0b23766b33&idx=1&mid=2247484257&scene=21&sn=116d13bc5c2382fe1eddf734ed0c95b2#wechat_redirect)
-
-[Python使用tkinter编写图片浏览程序](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa815dcfd2103a4e9af9b345b5cf6fdb26da8974aa0527253583f3418751169d85d0eda2d&idx=1&mid=2247484239&scene=21&sn=fd88760ed9c6f500271229985c13df9a#wechat_redirect)
-
-[Python实现倒计时按钮](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa81fdcfd210912efff7b4948abeb98622d8e020dc3be4a04e244d438a07561a1ff083898&idx=1&mid=2247484229&scene=21&sn=85fd9932d5a19a39fb0e6979c0cf2107#wechat_redirect)
-
-[详解Python GUI版24点游戏制作过程](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aa945dcfd20532dc4d3591f29eb5eb2e0cce9a4c93db478dd39670dd2b86497b092baf2c3&idx=1&mid=2247483935&scene=21&sn=907a482eb024b13b6b2c826df0299835#wechat_redirect)
-
-[Python tkinter版猜数游戏](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&chksm=eb8aaaa0dcfd23b664ddf3a10eed6602a5fe139fc6a9c70936e7acf33df7921b90aa12fc427f&idx=1&mid=2247483898&scene=21&sn=d93349e27f5bf00dbf735f3f7285f135#wechat_redirect)
-
-[Python+tkinter实现任意多层级关系的组合框](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&idx=1&mid=2247483746&scene=21&sn=348a1194b9ff95107994cd90fc5ba154#wechat_redirect)
-
-[Python+tkinter+pillow实现屏幕任意区域截图](http://mp.weixin.qq.com/s?__biz=MzI4MzM2MDgyMQ%3D%3D&idx=1&mid=2247483721&scene=21&sn=e88d8a205e2671281d17b57ba91e2e0a#wechat_redirect)
-
-
 
 
 ### 网络编程
@@ -2571,3 +2626,4 @@ OOP:面向对象设计
 | view                 | 视图                    |
 | considered harmful   | 视为有害                |
 | context manager      | 上下文管理器            |
+
