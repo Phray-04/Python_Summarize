@@ -1184,10 +1184,6 @@ pygame游戏开发模块
 
 
 
-## B 应用进阶篇
-
- 
-
 ### 一 迭代器和生成器
 
  
@@ -1564,8 +1560,149 @@ re.sub用户替换字符串,re.sub(pattern=正则中的模式字符串, repl, st
 
  
 
-### 六 GUI Tkinter
+### 常见问题
 
+#### 解压文件
+
+```
+
+一 常用tar命令
+# 压缩文件 file1 和目录 dir2 到 test.tar.gz
+tar -zcvf test.tar.gz file1 dir2
+# 解压 test.tar.gz（将 c 换成 x 即可）
+tar -zxvf test.tar.gz
+# tar -zxvf flash_player_npapi_linux.x86_64.tar.gz
+# 列出压缩文件的内容
+tar -ztvf test.tar.gz 
+
+-z : 使用 gzip 来压缩和解压文件
+-v : --verbose 详细的列出处理的文件
+-f : --file=ARCHIVE 使用档案文件或设备，这个选项通常是必选的
+-c : --create 创建一个新的归档（压缩包）
+-x : 从压缩包中解出文件
+
+
+二 Windows zip rar
+
+rar
+# 压缩文件
+rar a -r test.rar file
+# 解压文件
+unrar x test.rar
+zip
+# 压缩文件
+zip -r test.zip file
+# 解压文件
+unzip test.zip
+a : 添加到压缩文件
+-r : 递归处理
+x : 以绝对路径解压文件
+```
+
+#### docker部署
+
+在云服务启动时，要在`服务器的安全组规则`中添加`27017`端口访问的规则。
+```
+docker pull mongo
+
+docker run -itd --name mongo_server1 -p 27017:27017 mongo
+```
+#### 三、Http服务器
+
+User-Agent 请求载体的身份标识
+
+Connection:请求完毕后是否断开连接
+
+content-tpye:服务器响应回客户端的数据类型
+
+http/https:安全协议/安全协议(加密方式
+
+
+
+- urllib库
+
+  - request.urlopen()|urlretrieve()|Request|build_opener()|HTTPHandler|HTTPCookieProcessor(http.cookiejar.Cookiejar())|ProxyHandler(proxies={})
+  - parse.quote()|urlencode()
+
+- requests库(接口测试)
+
+  - 依赖urllib3(封装了很多类-OOB)
+  - request(method, url, params, data, json, files, headers,cookies, auth, proxies)
+  - get(url, params, headers, proxies)
+  - post(url, data, json, headers, proxies, cookies,files)
+  - put(url, data, json, headers, proxies, cookies, files)
+  - delete(url)
+  - session()  用于存储Cookie, 可以与服务器建立长连接`Connection: keep-alive`请求或响应头。
+
+- 请求头和响应头
+
+  - 请求头
+
+    ```
+    # 请求头原始报文的第一行
+    # GET / HTTP/1.1
+    HOST: www.baidu.com
+    Accept: text/html,text/*
+    Referer: 
+    X-Requested-with: XMLHTTPRequest
+    User-Agent: 
+    Cookie: 
+    Content-Type:
+    Content-Length:
+    ```
+
+  - 响应头(Web后端服务)
+
+    ```
+    # 原始报文的第一行
+    # HTTP/1.1 200 OK
+    Content-Type: text/html;charset=utf-8
+    Content-Length:
+    Set-Cookie: 
+    Date:
+    Server: 
+    Cookie: 
+    ```
+
+#### `__init__.py` 
+
+导包作用:让一个呈结构化分布(以文件夹形式组织)的代码文件夹变成可以被导入`import`的软件包
+
+#### JSON
+
+使用 JSON (JavaScript Object Notation)轻量级文本数据交换格式
+
+的文件存储进度数据 ,键值对{string-value}合法格式:
+
+```json
+{
+"type1": "string",
+'type2': 31,	//单双引号都行(注意!JSON不支持注释)
+"type3": {"name":"张三"},
+"type4": ["张三","李四"],	//花中括号都行
+"type5": true,	
+"type6": null,
+	}
+
+```
+
+#### py程序打包exe
+
+```cpp
+pyinstaller参数集合：
+
+–icon=[图标路径](http://www.icontuku.com/)（pyinstaller -F --icon=my.ico XXXX.py）
+-F 打包成一个exe文件
+-w 小写，使用窗口，无控制台
+-c 使用控制台，无窗口
+-D 创建一个目录，里面包含exe以及其他一些依赖性文件 
+-i  这里的i也是小写的，意思是忽略打包过程中遇到的错误，就是遇到错误也继续执行
+```
+
+
+## 专业分支篇
+
+### GUI 用户图形界面TKinter
 
 
 用户图形界面
@@ -1672,9 +1809,8 @@ config配置控件样式
 
 
 
-### 八 网络编程
 
-
+### 网络编程
 
 Socket网络编程 / NetAssist网络调试助手
 
@@ -1712,105 +1848,51 @@ udp_socket.close()
 
 
 
-### 补充
+### 数据解析与存储
+
+#### 数据解析
+
+- re解析提取
+
+  - re.search()
+  - re.findall()
+
+- xpath提取(Element)
+
+  - rootElement = lxml.etree.HTML(html_content)  节点对象
+  - 节点对象的.xpath()提取数据
+    - `/a/b/c`
+    - `//div/ul//a`
+    - `./li/a/@href | ./li/a/text()` 
+    - `./li[1]`
+    - `./li[position()<4]`
+    - `./li[last()-1]`
+    - `//div[@class="abc"]`
+    - `//div[starts-with(@class, "abc")]`
+    - `//div[ends-with(@class, "ddd")]`
+
+- bs4( Tag )
+
+  - rootTag = BeautifulSoup(html_content, 'lxml')
+
+  - find('标签名'， class\_|id_)|find_all()
+  - selector(CSS选择器)
+  - bs4.element.Tag对象的属性
+    - text|string|get_text()
+    - attrs|Tag[]|Tag.get("属性名"， 默认属性值)
+    - contents 所有的文本子节点
+    - descendants 所有子标签节点对象
+
+#### 数据存储
+
+- pymysql
+- csv (csv.DictWriter|csv.DictReader)
+- json
+- excel( xlwt|xlrd )
 
 
 
-##### `__init__.py` 
-
-导包作用:让一个呈结构化分布(以文件夹形式组织)的代码文件夹变成可以被导入`import`的软件包
-
-##### JSON
-
-使用 JSON (JavaScript Object Notation)轻量级文本数据交换格式
-
-的文件存储进度数据 ,键值对{string-value}合法格式:
-
-```json
-{
-"type1": "string",
-'type2': 31,	//单双引号都行(注意!JSON不支持注释)
-"type3": {"name":"张三"},
-"type4": ["张三","李四"],	//花中括号都行
-"type5": true,	
-"type6": null,
-	}
-
-```
-
-##### py程序打包exe
-
-```cpp
-pyinstaller参数集合：
-
-–icon=[图标路径](http://www.icontuku.com/)（pyinstaller -F --icon=my.ico XXXX.py）
--F 打包成一个exe文件
--w 小写，使用窗口，无控制台
--c 使用控制台，无窗口
--D 创建一个目录，里面包含exe以及其他一些依赖性文件 
--i  这里的i也是小写的，意思是忽略打包过程中遇到的错误，就是遇到错误也继续执行
-```
-
-##### Python术语表
-
-| ABC                  | 编程语言                |
-| -------------------- | ----------------------- |
-| BOM                  | 字节序标记              |
-| CPython              | C语言实现的Python解释器 |
-| CRUD                 | 程序四种基本操作        |
-| dunder               | 首尾两个下划线的读法    |
-| listcomp             | 列表推导                |
-| ORM                  | 对象关系映射器          |
-| PyPI                 | Python包索引            |
-| PyPy                 | Python包解释器          |
-| YAGNI                | 不实现非立即需要的功能  |
-| bound method         | 绑定方法                |
-| codec                | 编码解码器              |
-| mutator              | 变值方法                |
-| aliasing             | 别名                    |
-| parallel assignment  | 并行赋值                |
-| ABC                  | 抽象基类                |
-| Initializer          | 初始化方法              |
-| storage attribute    | 储存属性                |
-| accessor             | 储存方法                |
-| code smell           | 代码异味                |
-| singleton            | 单例                    |
-| import time          | 导入时                  |
-| iterator             | 迭代器                  |
-| lazy                 | 惰性求值                |
-| binary sequence      | 二进制序列              |
-| generic function     | 泛函数                  |
-| byte string          | 字节字符串              |
-| decorator            | 装饰器                  |
-| referent             | 指示对象                |
-| truthy               | 真值                    |
-| tuple unpacking      | 元组拆包                |
-| metaprogramming      | 元编程                  |
-| metaclass            | 元类                    |
-| user-defined         | 用户定义的              |
-| refcount             | 引用计数                |
-| first-class function | 一等函数                |
-| duck typing          | 鸭子类型                |
-| serialization        | 序列化                  |
-| virtual subclass     | 虚拟子类                |
-| parameter            | 形参                    |
-| argument             | 实参                    |
-| shallow copy         | 浅复制                  |
-| deep copy            | 深复制                  |
-| generator            | 生成器                  |
-| generator expression | 生成器表达式            |
-| generator function   | 生成器函数              |
-| view                 | 视图                    |
-| considered harmful   | 视为有害                |
-| context manager      | 上下文管理器            |
-
-
-
-## 专业分支篇
-
-### 一、 爬虫
-
-
+### 爬虫
 
 **爬虫spider——（网络）数据采集程序**
 
@@ -1846,7 +1928,7 @@ pyinstaller参数集合：
 
 增量式爬虫:监测网站数据更新
 
-#### **二	工具**（库）
+#### 二、工具（库）
 
 网络请求：urllib / requests / urllib3 / selenium / appium
 
@@ -2059,160 +2141,6 @@ xpath属于xml/html解析数据的一种方式， 基于元素（Element）的�
   - scrapyd部署
 
 
-
-### 二、 网络编程
-
-TCP/IP
-
-#### 三、Http服务器
-
-User-Agent 请求载体的身份标识
-
-Connection:请求完毕后是否断开连接
-
-content-tpye:服务器响应回客户端的数据类型
-
-http/https:安全协议/安全协议(加密方式
-
-
-
-- urllib库
-
-  - request.urlopen()|urlretrieve()|Request|build_opener()|HTTPHandler|HTTPCookieProcessor(http.cookiejar.Cookiejar())|ProxyHandler(proxies={})
-  - parse.quote()|urlencode()
-
-- requests库(接口测试)
-
-  - 依赖urllib3(封装了很多类-OOB)
-  - request(method, url, params, data, json, files, headers,cookies, auth, proxies)
-  - get(url, params, headers, proxies)
-  - post(url, data, json, headers, proxies, cookies,files)
-  - put(url, data, json, headers, proxies, cookies, files)
-  - delete(url)
-  - session()  用于存储Cookie, 可以与服务器建立长连接`Connection: keep-alive`请求或响应头。
-
-- 请求头和响应头
-
-  - 请求头
-
-    ```
-    # 请求头原始报文的第一行
-    # GET / HTTP/1.1
-    HOST: www.baidu.com
-    Accept: text/html,text/*
-    Referer: 
-    X-Requested-with: XMLHTTPRequest
-    User-Agent: 
-    Cookie: 
-    Content-Type:
-    Content-Length:
-    ```
-
-  - 响应头(Web后端服务)
-
-    ```
-    # 原始报文的第一行
-    # HTTP/1.1 200 OK
-    Content-Type: text/html;charset=utf-8
-    Content-Length:
-    Set-Cookie: 
-    Date:
-    Server: 
-    Cookie: 
-    ```
-
-### 数据解析与存储
-
-#### 数据解析
-
-- re解析提取
-
-  - re.search()
-  - re.findall()
-
-- xpath提取(Element)
-
-  - rootElement = lxml.etree.HTML(html_content)  节点对象
-  - 节点对象的.xpath()提取数据
-    - `/a/b/c`
-    - `//div/ul//a`
-    - `./li/a/@href | ./li/a/text()` 
-    - `./li[1]`
-    - `./li[position()<4]`
-    - `./li[last()-1]`
-    - `//div[@class="abc"]`
-    - `//div[starts-with(@class, "abc")]`
-    - `//div[ends-with(@class, "ddd")]`
-
-- bs4( Tag )
-
-  - rootTag = BeautifulSoup(html_content, 'lxml')
-
-  - find('标签名'， class\_|id_)|find_all()
-  - selector(CSS选择器)
-  - bs4.element.Tag对象的属性
-    - text|string|get_text()
-    - attrs|Tag[]|Tag.get("属性名"， 默认属性值)
-    - contents 所有的文本子节点
-    - descendants 所有子标签节点对象
-
-#### 数据存储
-
-- pymysql
-- csv (csv.DictWriter|csv.DictReader)
-- json
-- excel( xlwt|xlrd )
-
-### docker部署
-
-在云服务启动时，要在`服务器的安全组规则`中添加`27017`端口访问的规则。
-```
-docker pull mongo
-
-docker run -itd --name mongo_server1 -p 27017:27017 mongo
-```
-
-
-
-
-### 常见问题
-
-#### 解压文件
-
-```
-
-一 常用tar命令
-# 压缩文件 file1 和目录 dir2 到 test.tar.gz
-tar -zcvf test.tar.gz file1 dir2
-# 解压 test.tar.gz（将 c 换成 x 即可）
-tar -zxvf test.tar.gz
-# tar -zxvf flash_player_npapi_linux.x86_64.tar.gz
-# 列出压缩文件的内容
-tar -ztvf test.tar.gz 
-
--z : 使用 gzip 来压缩和解压文件
--v : --verbose 详细的列出处理的文件
--f : --file=ARCHIVE 使用档案文件或设备，这个选项通常是必选的
--c : --create 创建一个新的归档（压缩包）
--x : 从压缩包中解出文件
-
-
-二 Windows zip rar
-
-rar
-# 压缩文件
-rar a -r test.rar file
-# 解压文件
-unrar x test.rar
-zip
-# 压缩文件
-zip -r test.zip file
-# 解压文件
-unzip test.zip
-a : 添加到压缩文件
--r : 递归处理
-x : 以绝对路径解压文件
-```
 
 
 ### 数据分析与可视化
@@ -2590,3 +2518,56 @@ OOA:面向对象分析
 OOD:面向对象设计
 
 OOP:面向对象设计
+
+[3^]:Python术语表
+
+| ABC                  | 编程语言                |
+| -------------------- | ----------------------- |
+| BOM                  | 字节序标记              |
+| CPython              | C语言实现的Python解释器 |
+| CRUD                 | 程序四种基本操作        |
+| dunder               | 首尾两个下划线的读法    |
+| listcomp             | 列表推导                |
+| ORM                  | 对象关系映射器          |
+| PyPI                 | Python包索引            |
+| PyPy                 | Python包解释器          |
+| YAGNI                | 不实现非立即需要的功能  |
+| bound method         | 绑定方法                |
+| codec                | 编码解码器              |
+| mutator              | 变值方法                |
+| aliasing             | 别名                    |
+| parallel assignment  | 并行赋值                |
+| ABC                  | 抽象基类                |
+| Initializer          | 初始化方法              |
+| storage attribute    | 储存属性                |
+| accessor             | 储存方法                |
+| code smell           | 代码异味                |
+| singleton            | 单例                    |
+| import time          | 导入时                  |
+| iterator             | 迭代器                  |
+| lazy                 | 惰性求值                |
+| binary sequence      | 二进制序列              |
+| generic function     | 泛函数                  |
+| byte string          | 字节字符串              |
+| decorator            | 装饰器                  |
+| referent             | 指示对象                |
+| truthy               | 真值                    |
+| tuple unpacking      | 元组拆包                |
+| metaprogramming      | 元编程                  |
+| metaclass            | 元类                    |
+| user-defined         | 用户定义的              |
+| refcount             | 引用计数                |
+| first-class function | 一等函数                |
+| duck typing          | 鸭子类型                |
+| serialization        | 序列化                  |
+| virtual subclass     | 虚拟子类                |
+| parameter            | 形参                    |
+| argument             | 实参                    |
+| shallow copy         | 浅复制                  |
+| deep copy            | 深复制                  |
+| generator            | 生成器                  |
+| generator expression | 生成器表达式            |
+| generator function   | 生成器函数              |
+| view                 | 视图                    |
+| considered harmful   | 视为有害                |
+| context manager      | 上下文管理器            |
