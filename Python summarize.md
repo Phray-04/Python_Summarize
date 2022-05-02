@@ -29,6 +29,8 @@ Python Program document
 > 版权所有，未得书面许可，本文档的任何部分和全部不得以任何形式重制或用于商用。
 
 
+---
+
 
 ## 入门基础篇
 
@@ -40,7 +42,9 @@ Python Program document
 
 **Windows**
 
-[Python](https://www.python.org/downloads/release/python-391/)，[Pycharm](https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows)专业版（破解详见激活教程），VMware虚拟机Ubuntu(Linux)操作系统
+[Python](https://www.python.org/downloads/release/python-391/)，
+[Pycharm](https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows)专业版（破解详见激活教程）
+VMware虚拟机Ubuntu(Linux)操作系统
 
 开发注解:软件安装包,使用教程
 
@@ -49,8 +53,7 @@ Python Program document
 Vim、Pycharm
 
 
-
-#### **2.工具**
+#### 2. 工具
 
 XMind 思维导图、Typora 笔记查阅，GitHub Desktop 项目空间
 
@@ -58,13 +61,15 @@ XMind 思维导图、Typora 笔记查阅，GitHub Desktop 项目空间
 
 **Python Console** -- IDLE交互式编程（用于即时代码验证和解释）
 
-\>>> print(“hello world”)
+```python
+	print("hello world")
+	/*输出hello world*/
 
-\>>> hello world
+```
 
 
 
-**包管理工具**：pip安装Python第三方工具包(添加到用户环境变量PATH中)；Pip install  包名
+**包管理工具**：pip安装Python第三方工具包(添加到用户环境变量PATH中)；pip install  包名
 
  
 
